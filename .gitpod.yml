@@ -1,1 +1,3 @@
-{}
+{
+  checkoutLocation: "src/github.com/radhe-soni/s3-bucket-service"
+}
