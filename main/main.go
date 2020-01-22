@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"os"
@@ -16,14 +17,20 @@ func main() {
 	cfg := sess.Config
 	bs := bucketservice.NewBucketService(sess)
 	buckets := bs.GetAllBuckets()
-	
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("-> ")
+    suffix, _ := reader.ReadString('\n')
 	for _, b := range buckets {
-		fmt.Println("##################################")
-		bucketservice.DisplayBucket(b)
-		if strings.EqualFold(*cfg.Region, bs.GetBucketRegion(*b.Name)) {
+		
+		if strings.EqualFold(*cfg.Region, bs.GetBucketRegion(*b.Name)) && strings.HasSuffix(*b.Name, suffix) {
+			fmt.Println("##################################")
+			bucketservice.DisplayBucket(b)
 			bs.ListObject(*b.Name)
+			bs.DeleteBucket(*b.Name)
 		}
+        //if strings.end
 	}
-	bs.DeleteBucket(os.Args[1])
+	
+	
 	//bucketservice.CreateBucket(s3Client, "hpcl.radhe.dev")
 }
