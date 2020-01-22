@@ -72,6 +72,6 @@ func (bs bucketService) GetBucketRegion(bucket string) string {
 		}
 		return ""
 	}
-	fmt.Printf("Bucket %s is in %s region\n", bucket, region)
+	//fmt.Printf("Bucket %s is in %s region\n", bucket, region)
 	return region
 }
