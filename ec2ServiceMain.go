@@ -17,9 +17,6 @@ func main() {
 		}
 	}
 
-	/*fmt.Println("Enter New Ip to add -> ")
-	var newIp string
-	fmt.Scanln(&newIp)*/
 	fmt.Printf("Exiting app")
 }
 
@@ -39,6 +36,7 @@ func userInterface() bool {
 		ec2Service.VerifySecurityGroups()
 		break
 	case 2:
+		updateIPInterface(ec2Service.UpdateIPWith)
 		break
 	case 3:
 		exitApp = true
@@ -47,4 +45,14 @@ func userInterface() bool {
 		fmt.Println("Enter a valid choice.")
 	}
 	return exitApp
+}
+
+func updateIPInterface(updateIPWith func(a, b string)) {
+	fmt.Println("Enter New Ip to add -> ")
+	var newIP string
+	fmt.Scanln(&newIP)
+	fmt.Println("Enter Rule description to update -> ")
+	var ruleDescription string
+	fmt.Scanln(&ruleDescription)
+	updateIPWith(newIP, ruleDescription)
 }

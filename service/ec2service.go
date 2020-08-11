@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
@@ -66,4 +67,10 @@ func getSecurityGrps() []*string {
 		awsSecurityGrpIds = append(awsSecurityGrpIds, aws.String(x.(string)))
 	}
 	return awsSecurityGrpIds
+}
+
+//UpdateIPWith this method filters IP Permissions in configured security groups
+//by :ruleDescription and then update each IP Permission with :newIP
+func (ec2Service EC2Service) UpdateIPWith(newIP, ruleDescription string) {
+	log.Printf("updating ruleDescription %s with ip %s \n", ruleDescription, newIP)
 }
