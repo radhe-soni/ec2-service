@@ -1,0 +1,8 @@
+aws.ec2: 
+  security.groups: 
+    - dummies-groups1
+    - dummies-groups1
+  credentials: 
+    accessKeyId: dummies-id
+    accessKey: dummies-key
+  region: dummies-region
