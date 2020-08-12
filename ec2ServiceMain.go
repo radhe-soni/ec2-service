@@ -54,5 +54,6 @@ func updateIPInterface(updateIPWith func(a, b string)) {
 	fmt.Println("Enter Rule description to update -> ")
 	var ruleDescription string
 	fmt.Scanln(&ruleDescription)
+	fmt.Println()
 	updateIPWith(newIP, ruleDescription)
 }
