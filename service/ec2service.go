@@ -150,8 +150,11 @@ func (ec2Service EC2Service) revokePermissionForOldIP(ruleDescription string, ip
 	}
 }
 func hasRangeWith(ruleDescription string, ipp *ec2.IpPermission) bool {
+	if len(ipp.IpRanges) < 1 {
+		return false
+	}
 	for _, ipRange := range ipp.IpRanges {
-		if strings.EqualFold(ruleDescription, *ipRange.Description) {
+		if ipRange.Description != nil && strings.EqualFold(ruleDescription, *ipRange.Description) {
 			return true
 		}
 	}
