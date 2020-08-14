@@ -48,9 +48,11 @@ func userInterface() bool {
 }
 
 func updateIPInterface(updateIPWith func(a, b string)) {
-	fmt.Println("Enter New Ip to add -> ")
-	var newIP string
-	fmt.Scanln(&newIP)
+	newIP, err := service.FindMyPublicIP()
+	if err != nil {
+		fmt.Println("Enter New Ip to add -> ")
+		fmt.Scanln(&newIP)
+	}
 	fmt.Println("Enter Rule description to update -> ")
 	var ruleDescription string
 	fmt.Scanln(&ruleDescription)
