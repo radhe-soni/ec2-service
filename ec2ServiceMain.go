@@ -20,7 +20,7 @@ func main() {
 	fmt.Printf("Exiting app")
 }
 
-var services []string = []string{"describe", "update-ip", "exit"}
+var services []string = []string{"describe", "update-my-ip", "update-custom-ip", "exit"}
 
 func userInterface() bool {
 	ec2Service := viper.Get("ec2Service").(*service.EC2Service)
@@ -36,9 +36,12 @@ func userInterface() bool {
 		ec2Service.VerifySecurityGroups()
 		break
 	case 2:
-		updateIPInterface(ec2Service.UpdateIPWith)
+		updateMyIPInterface(ec2Service.UpdateIPWith)
 		break
 	case 3:
+		updateCustomIPInterface(ec2Service.UpdateIPWith)
+		break
+	case 4:
 		exitApp = true
 		break
 	default:
@@ -47,15 +50,26 @@ func userInterface() bool {
 	return exitApp
 }
 
-func updateIPInterface(updateIPWith func(a, b string)) {
+func updateMyIPInterface(updateIPWith func(a, b string)) {
 	newIP, err := service.FindMyPublicIP()
 	if err != nil {
+		fmt.Println(err)
 		fmt.Println("Enter New Ip to add -> ")
 		fmt.Scanln(&newIP)
 	}
+	updateIPInterface(newIP, updateIPWith)
+}
+
+func updateIPInterface(newIP string, updateIPWith func(a, b string)) {
 	fmt.Println("Enter Rule description to update -> ")
 	var ruleDescription string
 	fmt.Scanln(&ruleDescription)
 	fmt.Println()
 	updateIPWith(newIP, ruleDescription)
+}
+func updateCustomIPInterface(updateIPWith func(a, b string)) {
+	var newIP string
+	fmt.Println("Enter New Ip to add -> ")
+	fmt.Scanln(&newIP)
+	updateIPInterface(newIP, updateIPWith)
 }
